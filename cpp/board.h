@@ -19,19 +19,38 @@ namespace gb{
       }
 
       void add_tile(){
-        while(true){
-          srand(time(0));
-          int row = rand() % 4;
-          int col = rand() % 4;
-          if(tiles[row][col] == 0){
-            tiles[row][col] = 2;
-            break;
+        int empty[16][2] = {};
+        int index = 0;
+        for(int row = 0; row < 4; row++){
+          for(int col = 0; col < 4; col++){
+            if(empty[row][col] == 0){
+              empty[index][0] = row;
+              empty[index][1] = col;
+              index += 1;
+            }
           }
         }
+        srand(time(0));
+        int random_empty_tile = rand() % index;
+        tiles[empty[random_empty_tile][0]][empty[random_empty_tile][1]] = 2;
       }
 
-      void shift(std::string direction){
+      bool check_availablity(){
+        bool available = false;
+        for(int row = 0; row < 4; row++){
+          for(int col = 0; col < 4; col++){
+            if(tiles[row][col] == tiles[row][col + 1] || 
+              tiles[row][col] == tiles[row + 1][col]){
+              available = true;
+            }
+          }
+        }
+        return available;
+      }
+
+      bool shift(std::string direction){
         int non_zero;
+        bool changed = false;
         if(direction == "right"){
           for(int row = 0; row < 4; row++){
             non_zero = 3;
@@ -40,6 +59,7 @@ namespace gb{
                 if(col != non_zero){
                   tiles[row][non_zero] = tiles[row][col];
                   tiles[row][col] = 0;
+                  changed = true;
                 }
                 non_zero -= 1;
               }
@@ -54,6 +74,7 @@ namespace gb{
                 if(row != non_zero){
                   tiles[non_zero][col] = tiles[row][col];
                   tiles[row][col] = 0;
+                  changed = true;
                 }
                 non_zero -= 1;
               }
@@ -68,6 +89,7 @@ namespace gb{
                 if(col != non_zero){
                   tiles[row][non_zero] = tiles[row][col];
                   tiles[row][col] = 0;
+                  changed = true;
                 }
                 non_zero += 1;
               }
@@ -82,6 +104,7 @@ namespace gb{
                 if(row != non_zero){
                   tiles[non_zero][col] = tiles[row][col];
                   tiles[row][col] = 0;
+                  changed = true;
                 }
                 non_zero += 1;
               }
@@ -90,6 +113,7 @@ namespace gb{
         } else {
           std::cout << "Invalid Direction." << std::endl;
         }
+        return changed;
       }
 
       void move(std::string direction){
@@ -171,6 +195,16 @@ namespace gb{
             }
           }
         }
+      }
+
+      bool valid(std::string direction){
+        std::string valid_directions[4] = {"right", "down", "left", "up"};
+        for(int i = 0; i < 4; i++){
+          if(direction == valid_directions[i]){
+            return true;
+          }
+        }
+        return false;
       }
 
       void display(){

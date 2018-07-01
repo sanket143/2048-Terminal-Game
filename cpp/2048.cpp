@@ -3,7 +3,6 @@
 
 int main(){
   gb::Board board;
-
   while(true){
     std::cout << "\033[2J\033[1;1H";
     std::cout << "2048 Terminal Game" << std::endl;
@@ -14,6 +13,10 @@ int main(){
 
     std::cout << "Direction: ";
     std::cin >> input;
+
+    if(!board.valid(input)){
+      continue;
+    }
     std::cout << "Loading..." << std::endl;
     board.move(input);
     board.add_tile();
