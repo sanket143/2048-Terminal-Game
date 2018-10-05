@@ -1,4 +1,4 @@
-#include <iostream>
+#include <bits/stdc++.h>
 
 #ifndef BOARD_H
 #define BOARD_H
