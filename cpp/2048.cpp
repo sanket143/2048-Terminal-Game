@@ -6,7 +6,7 @@ int main(){
   while(true){
     std::cout << "\033[2J\033[1;1H";
     std::cout << "2048 Terminal Game" << std::endl;
-    std::cout << "Valid Directions: [right|down|left|up]" << std::endl;
+    std::cout << "Valid Directions: [R|D|L|U]" << std::endl;
     std::string input;
 
     board.display();

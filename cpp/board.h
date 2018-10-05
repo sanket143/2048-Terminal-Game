@@ -51,7 +51,7 @@ namespace gb{
       bool shift(std::string direction){
         int non_zero;
         bool changed = false;
-        if(direction == "right"){
+        if(direction == "R"){
           for(int row = 0; row < 4; row++){
             non_zero = 3;
             for(int col = 3; col >= 0; col--){
@@ -66,7 +66,7 @@ namespace gb{
             }
           }
         }
-        else if(direction == "down"){
+        else if(direction == "D"){
           for(int col = 0; col < 4; col++){
             non_zero = 3;
             for(int row = 3; row >= 0; row--){
@@ -81,7 +81,7 @@ namespace gb{
             }
           }
         }
-        else if(direction == "left"){
+        else if(direction == "L"){
           for(int row = 0; row < 4; row++){
             non_zero = 0;
             for(int col = 0; col < 4; col++){
@@ -96,7 +96,7 @@ namespace gb{
             }
           }
         }
-        else if(direction == "up"){
+        else if(direction == "U"){
           for(int col = 0; col < 4; col++){
             non_zero = 0;
             for(int row = 0; row < 4; row++){
@@ -118,7 +118,7 @@ namespace gb{
 
       void move(std::string direction){
         shift(direction);
-        if(direction == "right"){
+        if(direction == "R"){
           for(int row = 0; row < 4; row++){
             for(int col = 3; col > 0; col--){
               if(tiles[row][col] == 0){
@@ -133,7 +133,7 @@ namespace gb{
             }
           }
         }
-        else if(direction == "down"){
+        else if(direction == "D"){
           for(int col = 0; col < 4; col++){
             for(int row = 3; row > 0; row--){
               if(tiles[row][col] == 0){
@@ -148,7 +148,7 @@ namespace gb{
             }
           } 
         }
-        else if(direction == "left"){
+        else if(direction == "L"){
           for(int row = 0; row < 4; row++){
             for(int col = 0; col < 3; col++){
               if(tiles[row][col] == 0){
@@ -163,7 +163,7 @@ namespace gb{
             }
           }
         }
-        else if(direction == "up"){
+        else if(direction == "U"){
           for(int col = 0; col < 4; col++){
             for(int row = 0; row < 3; row++){
               if(tiles[row][col] == 0){
@@ -179,8 +179,8 @@ namespace gb{
           }
         }
       }
-      void right(){
-        shift("right");
+      void R(){
+        shift("R");
         for(int row = 0; row < 4; row++){
           for(int col = 3; col > 0; col--){
             if(tiles[row][col] == 0){
@@ -191,14 +191,14 @@ namespace gb{
               tiles[row][col] += tiles[row][col - 1];
               tiles[row][col - 1] = 0;
 
-              shift("right");
+              shift("R");
             }
           }
         }
       }
 
       bool valid(std::string direction){
-        std::string valid_directions[4] = {"right", "down", "left", "up"};
+        std::string valid_directions[4] = {"R", "D", "L", "U"};
         for(int i = 0; i < 4; i++){
           if(direction == valid_directions[i]){
             return true;
