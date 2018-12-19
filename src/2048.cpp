@@ -1,5 +1,5 @@
 #include <iostream>
-#include "board.h"
+#include <board.h>
 
 int main(){
   gb::Board board;
