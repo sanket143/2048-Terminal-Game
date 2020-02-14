@@ -1,5 +1,5 @@
 #include <bits/stdc++.h>
-
+using namespace std;
 #ifndef BOARD_H
 #define BOARD_H
 
@@ -21,22 +21,26 @@ namespace gb{
       }
 
       void add_tile(){
-        int empty[16][2] = {};
-        int index = 0;
+       
+
+        vector <int> available;
+
         for(int row = 0; row < 4; row++){
           for(int col = 0; col < 4; col++){
-            if(empty[row][col] == 0){
-              empty[index][0] = row;
-              empty[index][1] = col;
-              index += 1;
+            if(tiles[row][col] == 0){
+              available.push_back(row*4+col);
             }
           }
         }
-       // srand(time(0));
-        int random_empty_tile = rand() % index;
-        if(tiles[empty[random_empty_tile][0]][empty[random_empty_tile][1]]==0)
-        tiles[empty[random_empty_tile][0]][empty[random_empty_tile][1]] = 2;
-        else add_tile();
+
+        
+        if(available.size()==0){
+          printf("Game Over\n");
+          exit(0);
+        }
+        int random_empty_tile = available[(int)(rand() % (int)available.size())];
+        tiles[random_empty_tile/4][random_empty_tile%4] = 2;
+          
       }
 
       bool shift(std::string direction){
@@ -183,6 +187,30 @@ namespace gb{
           }
         }
         return false;
+      }
+
+      bool Game_Over(){
+        for(int row = 0;row<4;row++){
+          for(int col = 0;col<4;col++){
+                 if(tiles[row][col] == 0) return false;
+          }
+        }
+        bool a = true;
+        for(int row = 0;row<3;row++){
+          for(int col = 0;col<4;col++){
+                 if(tiles[row][col]==tiles[row+1][col]) a = false;
+          }
+        }
+
+        for(int row = 0;row<4;row++){
+          for(int col = 0;col<3;col++){
+                 if(tiles[row][col]==tiles[row][col+1]) a = false;
+          }
+        }
+
+        if(tiles[3][3]==tiles[3][2] || tiles[3][3]==tiles[2][3]) a = false;
+
+        return a;
       }
 
       void display(){
