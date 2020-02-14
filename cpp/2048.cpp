@@ -19,7 +19,9 @@ int main(){
     }
     std::cout << "Loading..." << std::endl;
     board.move(input);
+    if(gb::flag)
     board.add_tile();
     board.display();
+
   }
 }
