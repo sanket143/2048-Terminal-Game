@@ -6,14 +6,16 @@
 namespace gb{
 
   const int size = 4;
+  bool flag = false;
 
   class Board{
     int tiles[size][size] = {};
     int score;
-
+    
     public:
       Board(){
         score = 0;
+        
         add_tile();
         add_tile();
       }
@@ -30,22 +32,11 @@ namespace gb{
             }
           }
         }
-        srand(time(0));
+       // srand(time(0));
         int random_empty_tile = rand() % index;
+        if(tiles[empty[random_empty_tile][0]][empty[random_empty_tile][1]]==0)
         tiles[empty[random_empty_tile][0]][empty[random_empty_tile][1]] = 2;
-      }
-
-      bool check_availablity(){
-        bool available = false;
-        for(int row = 0; row < 4; row++){
-          for(int col = 0; col < 4; col++){
-            if(tiles[row][col] == tiles[row][col + 1] || 
-              tiles[row][col] == tiles[row + 1][col]){
-              available = true;
-            }
-          }
-        }
-        return available;
+        else add_tile();
       }
 
       bool shift(std::string direction){
@@ -117,7 +108,7 @@ namespace gb{
       }
 
       void move(std::string direction){
-        shift(direction);
+        flag |= shift(direction);
         if(direction == "R"){
           for(int row = 0; row < 4; row++){
             for(int col = 3; col > 0; col--){
@@ -128,6 +119,7 @@ namespace gb{
               if(tiles[row][col] == tiles[row][col - 1]){
                 tiles[row][col] += tiles[row][col - 1];
                 tiles[row][col - 1] = 0;
+                flag |= true;
                 shift(direction);
               }
             }
@@ -143,6 +135,7 @@ namespace gb{
               if(tiles[row][col] == tiles[row - 1][col]){
                 tiles[row][col] += tiles[row-1][col];
                 tiles[row - 1][col] = 0;
+                flag |= true;
                 shift(direction);
               }
             }
@@ -158,6 +151,7 @@ namespace gb{
               if(tiles[row][col] == tiles[row][col + 1]){
                 tiles[row][col] += tiles[row][col + 1];
                 tiles[row][col + 1] = 0;
+                flag |= true;
                 shift(direction);
               }
             }
@@ -173,25 +167,9 @@ namespace gb{
               if(tiles[row][col] == tiles[row + 1][col]){
                 tiles[row][col] += tiles[row + 1][col];
                 tiles[row + 1][col] = 0;
+                flag |= true;
                 shift(direction);
               }
-            }
-          }
-        }
-      }
-      void R(){
-        shift("R");
-        for(int row = 0; row < 4; row++){
-          for(int col = 3; col > 0; col--){
-            if(tiles[row][col] == 0){
-              break;
-            }
-
-            if(tiles[row][col] == tiles[row][col - 1]){
-              tiles[row][col] += tiles[row][col - 1];
-              tiles[row][col - 1] = 0;
-
-              shift("R");
             }
           }
         }
@@ -208,6 +186,7 @@ namespace gb{
       }
 
       void display(){
+        flag = false;
         for(int row = 0; row < size; row++){
           for(int col = 0; col < size; col++){
             if(tiles[row][col] == 0){
