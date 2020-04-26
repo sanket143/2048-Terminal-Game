@@ -15,14 +15,12 @@ namespace gb{
     public:
       Board(){
         score = 0;
-        
         add_tile();
         add_tile();
       }
 
       void add_tile(){
-       
-
+      
         vector <int> available;
 
         for(int row = 0; row < 4; row++){
@@ -32,7 +30,6 @@ namespace gb{
             }
           }
         }
-
         
         if(available.size()==0){
           printf("Game Over\n");
@@ -189,22 +186,22 @@ namespace gb{
         return false;
       }
 
-      bool Game_Over(){
+      bool gameOver(){
         for(int row = 0;row<4;row++){
           for(int col = 0;col<4;col++){
-                 if(tiles[row][col] == 0) return false;
+            if(tiles[row][col] == 0) return false;
           }
         }
         bool a = true;
         for(int row = 0;row<3;row++){
           for(int col = 0;col<4;col++){
-                 if(tiles[row][col]==tiles[row+1][col]) a = false;
+            if(tiles[row][col]==tiles[row+1][col]) a = false;
           }
         }
 
         for(int row = 0;row<4;row++){
           for(int col = 0;col<3;col++){
-                 if(tiles[row][col]==tiles[row][col+1]) a = false;
+            if(tiles[row][col]==tiles[row][col+1]) a = false;
           }
         }
 
