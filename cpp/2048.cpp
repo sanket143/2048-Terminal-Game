@@ -22,7 +22,7 @@ int main(){
     if(gb::flag)
     board.add_tile();
     board.display();
-    if(board.Game_Over()){
+    if(board.gameOver()){
       cout << "\n GAME OVER !!! \n";
       return 0;
     }
