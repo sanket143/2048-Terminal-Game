@@ -1,3 +1,9 @@
+/***
+  Copyright 2020 Sanket Chaudhari 
+
+  2048.cpp is part of 2048-Terminal Game
+*/
+
 #include <iostream>
 #include <board.h>
 
